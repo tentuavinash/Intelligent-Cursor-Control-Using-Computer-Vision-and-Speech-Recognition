@@ -80,7 +80,7 @@ def record_audio():
 def respond(voice_data):
     global file_exp_status, files, is_awake, path
     print(voice_data)
-    voice_data.replace('rohan','')
+    voice_data.replace('avinash','')
     app.eel.addUserMsg(voice_data)
 
     if is_awake==False:
@@ -93,7 +93,7 @@ def respond(voice_data):
         wish()
 
     elif 'what is your name' in voice_data:
-        reply('My name is Rohan!')
+        reply('My name is avinash!')
 
     elif 'date' in voice_data:
         reply(today.strftime("%B %d, %Y"))
@@ -237,9 +237,8 @@ while True:
         voice_data = record_audio()
 
     #process voice_data
-    if 'rohan' in voice_data:
+    if voice_data:
         try:
-            #Handle sys.exit()
             respond(voice_data)
         except SystemExit:
             reply("Exit Successfull")

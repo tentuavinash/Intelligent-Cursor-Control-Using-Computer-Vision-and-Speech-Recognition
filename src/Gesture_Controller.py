@@ -351,13 +351,9 @@ class Controller:
         ratio = 1
         Controller.prev_hand = [x,y]
 
-        if distsq <= 25:
-            ratio = 0
-        elif distsq <= 900:
-            ratio = 0.07 * (distsq ** (1/2))
-        else:
-            ratio = 2.1
-        x , y = x_old + delta_x*ratio , y_old + delta_y*ratio
+        ratio = 0.3  # constant small factor
+        x, y = x_old + delta_x * ratio, y_old + delta_y * ratio
+
         return (x,y)
 
     def pinch_control_init(hand_result):
@@ -436,13 +432,13 @@ class Controller:
         # implementation
         if gesture == Gest.V_GEST:
             Controller.flag = True
-            pyautogui.moveTo(x, y, duration = 0.1)
+            pyautogui.moveTo(x, y, duration = 0)
 
         elif gesture == Gest.FIST:
             if not Controller.grabflag : 
                 Controller.grabflag = True
                 pyautogui.mouseDown(button = "left")
-            pyautogui.moveTo(x, y, duration = 0.1)
+            pyautogui.moveTo(x, y, duration = 0)
 
         elif gesture == Gest.MID and Controller.flag:
             pyautogui.click()
@@ -556,8 +552,15 @@ class GestureController:
         handminor = HandRecog(HLabel.MINOR)
 
         with mp_hands.Hands(max_num_hands = 2,min_detection_confidence=0.5, min_tracking_confidence=0.5) as hands:
+            skip_frame = 2  # process every 2nd frame
+            frame_counter = 0
+            
             while GestureController.cap.isOpened() and GestureController.gc_mode:
                 success, image = GestureController.cap.read()
+                frame_counter += 1
+                if frame_counter % skip_frame != 0:
+                    continue
+
 
                 if not success:
                     print("Ignoring empty camera frame.")

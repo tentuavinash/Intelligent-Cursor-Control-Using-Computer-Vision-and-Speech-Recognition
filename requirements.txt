@@ -4,8 +4,9 @@ pynput==1.7.3
 pyautogui==0.9.53
 wikipedia==1.4.0
 opencv-python==4.5.5.64
-mediapipe==0.8.6.2
+mediapipe==0.10.11
 comtypes==1.1.11
 pycaw==20181226
 screen-brightness-control==0.9.0
 eel==0.14.0
+cd /D D:\Personal\Gesture-Controlled-Virtual-Mouse-Along-with-Voice-Assistant
